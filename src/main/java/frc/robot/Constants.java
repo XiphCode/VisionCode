@@ -19,4 +19,7 @@ public final class Constants {
         public static final int SPARK_BL_ID = 2;
         public static final int SPARK_BR_ID = 1;
     }
+    public class ControllerConstants {
+        public static final int CONTROLLER_PORT = 0;
+    }
 }
