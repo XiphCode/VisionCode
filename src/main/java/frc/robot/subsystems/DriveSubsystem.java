@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
 
@@ -18,6 +19,7 @@ public class DriveSubsystem extends SubsystemBase {
   private MecanumDrive mechDrive = new MecanumDrive(talonFL, talonBL, talonFR, talonBR);
 
   public DriveSubsystem() {
+    mechDrive.setMaxOutput(DriveConstants.DRIVE_SPEED);
   }
 
   @Override
@@ -26,10 +28,9 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public void driveCartesian(double driveVal, double strafeVal, double rotateVal) {
-    mechDrive.driveCartesian(
-      strafeVal * DriveConstants.DRIVE_SPEED, 
-      driveVal * DriveConstants.DRIVE_SPEED, 
-      rotateVal * DriveConstants.DRIVE_SPEED
-    );
+    SmartDashboard.putNumber("Drive", driveVal);
+    SmartDashboard.putNumber("Strafe", strafeVal);
+    SmartDashboard.putNumber("Turn", rotateVal);
+    mechDrive.driveCartesian(rotateVal, strafeVal, driveVal);
   }
 }
