@@ -16,8 +16,9 @@ public final class Constants {
     public class DriveConstants {
         public static final int TALON_FL_ID = 21;
         public static final int TALON_FR_ID = 29;
-        public static final int SPARK_BL_ID = 2;
-        public static final int SPARK_BR_ID = 3;
+        public static final int TALON_BL_ID = 30;
+        public static final int TALON_BR_ID = 27;
+        public static final double DRIVE_SPEED = 0.5;
     }
     public class ControllerConstants {
         public static final int CONTROLLER_PORT = 0;

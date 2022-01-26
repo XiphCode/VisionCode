@@ -9,15 +9,13 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class DriveSubsystem extends SubsystemBase {
   private WPI_TalonSRX talonFL = new WPI_TalonSRX(DriveConstants.TALON_FL_ID);
   private WPI_TalonSRX talonFR = new WPI_TalonSRX(DriveConstants.TALON_FR_ID);
-  private CANSparkMax sparkBL = new CANSparkMax(DriveConstants.SPARK_BL_ID, MotorType.kBrushed);
-  private CANSparkMax sparkBR = new CANSparkMax(DriveConstants.SPARK_BR_ID, MotorType.kBrushed);
-  private MecanumDrive mechDrive = new MecanumDrive(talonFL, sparkBL, talonFR, sparkBR);
+  private WPI_TalonSRX talonBL = new WPI_TalonSRX(DriveConstants.TALON_BL_ID);
+  private WPI_TalonSRX talonBR = new WPI_TalonSRX(DriveConstants.TALON_BR_ID);
+  private MecanumDrive mechDrive = new MecanumDrive(talonFL, talonBL, talonFR, talonBR);
 
   public DriveSubsystem() {
   }
@@ -28,6 +26,10 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public void driveCartesian(double driveVal, double strafeVal, double rotateVal) {
-    mechDrive.driveCartesian(strafeVal, driveVal, rotateVal);
+    mechDrive.driveCartesian(
+      strafeVal * DriveConstants.DRIVE_SPEED, 
+      driveVal * DriveConstants.DRIVE_SPEED, 
+      rotateVal * DriveConstants.DRIVE_SPEED
+    );
   }
 }
