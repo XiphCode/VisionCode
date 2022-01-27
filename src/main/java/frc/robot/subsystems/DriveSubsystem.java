@@ -20,6 +20,8 @@ public class DriveSubsystem extends SubsystemBase {
 
   public DriveSubsystem() {
     mechDrive.setMaxOutput(DriveConstants.DRIVE_SPEED);
+    talonFR.setInverted(true);
+    talonBR.setInverted(true);
   }
 
   @Override
@@ -31,6 +33,6 @@ public class DriveSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Drive", driveVal);
     SmartDashboard.putNumber("Strafe", strafeVal);
     SmartDashboard.putNumber("Turn", rotateVal);
-    mechDrive.driveCartesian(rotateVal, strafeVal, driveVal);
+    mechDrive.driveCartesian(driveVal, strafeVal, rotateVal);
   }
 }
