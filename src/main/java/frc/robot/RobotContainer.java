@@ -43,8 +43,6 @@ public class RobotContainer {
         () -> stick.getRightX()
       )
     );
-
-    Shuffleboard.getTab("gyro").add(navxSubsystem.ahrs);
   }
 
   /**
