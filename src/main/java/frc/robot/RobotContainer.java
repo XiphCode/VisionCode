@@ -6,10 +6,15 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.commands.ArcadeDriveCmd;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.NavxSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -20,6 +25,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DriveSubsystem driveSubsystem = new DriveSubsystem();
+  private final NavxSubsystem navxSubsystem = new NavxSubsystem();
   private final XboxController stick = new XboxController(
     ControllerConstants.CONTROLLER_PORT
   );
@@ -37,6 +43,8 @@ public class RobotContainer {
         () -> stick.getRightX()
       )
     );
+
+    Shuffleboard.getTab("gyro").add(navxSubsystem.ahrs);
   }
 
   /**
@@ -45,7 +53,10 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {}
+  private void configureButtonBindings() {
+    new JoystickButton(stick, XboxController.Button.kRightBumper.value)
+      .whenPressed(new InstantCommand(() -> navxSubsystem.ahrs.zeroYaw()));
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
