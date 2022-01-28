@@ -7,9 +7,11 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.SPI;
 import frc.robot.Constants.DriveConstants;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.kauailabs.navx.frc.AHRS;
 
 public class DriveSubsystem extends SubsystemBase {
   private WPI_TalonSRX talonFL = new WPI_TalonSRX(DriveConstants.TALON_FL_ID);
@@ -17,6 +19,7 @@ public class DriveSubsystem extends SubsystemBase {
   private WPI_TalonSRX talonBL = new WPI_TalonSRX(DriveConstants.TALON_BL_ID);
   private WPI_TalonSRX talonBR = new WPI_TalonSRX(DriveConstants.TALON_BR_ID);
   private MecanumDrive mechDrive = new MecanumDrive(talonFL, talonBL, talonFR, talonBR);
+  private final AHRS ahrs = new AHRS(SPI.Port.kMXP);
 
   public DriveSubsystem() {
     mechDrive.setMaxOutput(DriveConstants.DRIVE_SPEED);
@@ -29,10 +32,14 @@ public class DriveSubsystem extends SubsystemBase {
     // Add logging of encoder values here
   }
 
+  public void resetGyroAngle() {
+    ahrs.zeroYaw();
+  }
+
   public void driveCartesian(double driveVal, double strafeVal, double rotateVal) {
     SmartDashboard.putNumber("Drive", driveVal);
     SmartDashboard.putNumber("Strafe", strafeVal);
     SmartDashboard.putNumber("Turn", rotateVal);
-    mechDrive.driveCartesian(driveVal, strafeVal, rotateVal);
+    mechDrive.driveCartesian(driveVal, strafeVal, rotateVal, ahrs.getAngle());
   }
 }
