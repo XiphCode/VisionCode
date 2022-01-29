@@ -20,6 +20,7 @@ public class DriveSubsystem extends SubsystemBase {
   private WPI_TalonSRX talonBR = new WPI_TalonSRX(DriveConstants.TALON_BR_ID);
   private MecanumDrive mechDrive = new MecanumDrive(talonFL, talonBL, talonFR, talonBR);
   private final AHRS ahrs = new AHRS(SPI.Port.kMXP);
+  private double turnAuto = 0;
 
   public DriveSubsystem() {
     mechDrive.setMaxOutput(DriveConstants.DRIVE_SPEED);
@@ -36,10 +37,26 @@ public class DriveSubsystem extends SubsystemBase {
     ahrs.zeroYaw();
   }
 
-  public void driveCartesian(double driveVal, double strafeVal, double rotateVal) {
+  public double getGyroAngle() {
+    return ahrs.getAngle();
+  }
+
+  public double gyroPidGet() {
+    return ahrs.getYaw();
+  }
+
+  public void setTurnAuto(double turnAuto) {
+    this.turnAuto = turnAuto;
+  }
+
+  public void driveCartesian(double driveVal, double strafeVal, double rotateInput) {
+    // Prefer the rotateInput if there is any.
+    double rotateVal = Math.abs(rotateInput) >= 0.1 ? rotateInput : turnAuto;
     SmartDashboard.putNumber("Drive", driveVal);
     SmartDashboard.putNumber("Strafe", strafeVal);
     SmartDashboard.putNumber("Turn", rotateVal);
+    SmartDashboard.putNumber("Turn Auto", turnAuto);
+
     mechDrive.driveCartesian(driveVal, strafeVal, rotateVal, ahrs.getAngle());
   }
 }
