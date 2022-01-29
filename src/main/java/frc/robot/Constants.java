@@ -20,6 +20,13 @@ public final class Constants {
         public static final int TALON_BR_ID = 27;
         public static final double DRIVE_SPEED = 0.8;
     }
+    public class TurnConstants {
+        public static final double kP = 0.02;
+        public static final double kI = 0;
+        public static final double kD = 0.002;
+        public static final double ANG_TOL = 10;
+        public static final double VEL_TOL = 10;
+    }
     public class ControllerConstants {
         public static final int CONTROLLER_PORT = 0;
     }
