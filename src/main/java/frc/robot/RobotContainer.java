@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.commands.ArcadeDriveCmd;
+import frc.robot.commands.BallTurnCmd;
 import frc.robot.commands.DriveCmd;
 import frc.robot.commands.Turn180Command;
 import frc.robot.subsystems.DriveSubsystem;
@@ -54,6 +55,8 @@ public class RobotContainer {
       .whenPressed(new InstantCommand(driveSubsystem::resetGyroAngle));
     new JoystickButton(stick, XboxController.Button.kA.value)
       .whenPressed(new Turn180Command(driveSubsystem).withTimeout(5));
+    new JoystickButton(stick, XboxController.Button.kB.value)
+      .whileActiveOnce(new BallTurnCmd(driveSubsystem), true);
   }
 
   /**
