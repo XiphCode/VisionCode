@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.commands.ArcadeDriveCmd;
+import frc.robot.commands.DriveCmd;
 import frc.robot.commands.Turn180Command;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -61,6 +62,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return null;
+    return new DriveCmd(driveSubsystem, 1).withTimeout(2);
   }
 }
