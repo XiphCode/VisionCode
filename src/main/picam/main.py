@@ -287,6 +287,8 @@ def main(ntinst):
 
     sink = CameraServer.getInstance().getVideo()
     img = np.zeros((height, width, 3), dtype=np.uint8)
+    halfwidth = width / 2
+    halfheight = height / 2
     last = 0
     while True:
         ts_us, img = sink.grabFrame(img)
@@ -302,8 +304,11 @@ def main(ntinst):
         b = proc_img(img, is_red_alliance)
         if b:
             x, y, r = b
+            # make values in range -1 to 1
+            x = (x - halfwidth) / halfwidth
+            y = (y - halfheight) / halfheight
         else:
-            x = y = r = -1
+            x = y = r = -99
         sd.putNumber("BallX", x)
         sd.putNumber("BallY", y)
         sd.putNumber("BallR", r)
