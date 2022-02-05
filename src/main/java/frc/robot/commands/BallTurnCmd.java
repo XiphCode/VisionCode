@@ -11,8 +11,13 @@ public class BallTurnCmd extends CommandBase {
 
     public BallTurnCmd(DriveSubsystem driveSubsystem) {
         this.driveSubsystem = driveSubsystem;
-        pid = new PIDController(1, 0, 0);
+        pid = new PIDController(0.7, 0, 0.07);
         pid.setSetpoint(0);
+    }
+
+    @Override
+    public void initialize() {
+        System.out.println("BallTurnCmd started");
     }
 
     @Override
@@ -20,7 +25,16 @@ public class BallTurnCmd extends CommandBase {
         double ballX = SmartDashboard.getNumber("BallX", -99);
         if (-1 <= ballX && ballX <= 1) {
             double val = pid.calculate(ballX);
-            driveSubsystem.driveCartesian(0, 0, val);
+            driveSubsystem.setTurnAuto(-val);
+        }
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        if (interrupted) {
+            System.out.println("BallTurnCmd interrupted");
+        } else {
+            System.out.println("BallTurnCmd finished");
         }
     }
 }
