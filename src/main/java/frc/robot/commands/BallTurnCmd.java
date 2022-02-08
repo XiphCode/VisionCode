@@ -7,12 +7,14 @@ import frc.robot.subsystems.DriveSubsystem;
 
 public class BallTurnCmd extends CommandBase {
     private DriveSubsystem driveSubsystem;
-    private PIDController pid;
+    private PIDController drivePID, turnPID;
 
     public BallTurnCmd(DriveSubsystem driveSubsystem) {
         this.driveSubsystem = driveSubsystem;
-        pid = new PIDController(0.7, 0, 0.07);
-        pid.setSetpoint(0);
+        drivePID = new PIDController(0.07, 0, 0.02);
+        drivePID.setSetpoint(35);
+        turnPID = new PIDController(0.7, 0, 0.07);
+        turnPID.setSetpoint(0);
     }
 
     @Override
@@ -22,15 +24,20 @@ public class BallTurnCmd extends CommandBase {
 
     @Override
     public void execute() {
+        double ballR = SmartDashboard.getNumber("BallR", -99);
+        if (10 <= ballR && ballR <= 40) {
+            driveSubsystem.setDriveAuto(drivePID.calculate(ballR));
+        }
         double ballX = SmartDashboard.getNumber("BallX", -99);
         if (-1 <= ballX && ballX <= 1) {
-            double val = pid.calculate(ballX);
-            driveSubsystem.setTurnAuto(-val);
+            driveSubsystem.setTurnAuto(-turnPID.calculate(ballX));
         }
     }
 
     @Override
     public void end(boolean interrupted) {
+        driveSubsystem.setDriveAuto(0);
+        driveSubsystem.setTurnAuto(0);
         if (interrupted) {
             System.out.println("BallTurnCmd interrupted");
         } else {

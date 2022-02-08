@@ -56,13 +56,22 @@ public class DriveSubsystem extends SubsystemBase {
 
   public void driveCartesian(double driveInput, double strafeVal, double turnInput) {
     // Prefer the driver input if there is any.
-    double driveVal = Math.abs(driveInput) >= 0.1 ? driveInput : driveAuto;
+    boolean driveIsManual = Math.abs(driveInput) >= 0.1;
+    // Ignore gyro when auto driving
+    boolean useGyro = driveIsManual;
+
+    double driveVal = driveIsManual ? driveInput : driveAuto;
     double rotateVal = Math.abs(turnInput) >= 0.1 ? turnInput : turnAuto;
+  
     SmartDashboard.putNumber("Drive", driveVal);
     SmartDashboard.putNumber("Strafe", strafeVal);
     SmartDashboard.putNumber("Turn", rotateVal);
     SmartDashboard.putNumber("Turn Auto", turnAuto);
 
-    mechDrive.driveCartesian(driveVal, strafeVal, rotateVal, ahrs.getAngle());
+    if (useGyro) {
+      mechDrive.driveCartesian(driveVal, strafeVal, rotateVal, ahrs.getAngle());
+    } else {
+      mechDrive.driveCartesian(driveVal, strafeVal, rotateVal);
+    }
   }
 }
