@@ -4,10 +4,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveSubsystem;
 
 public class DriveCmd extends CommandBase {
-    private DriveSubsystem driveSubsystem;
-    private double driveVal;
-    private double strafeVal;
-    private double turnVal;
+    private final DriveSubsystem driveSubsystem;
+    private final double driveVal;
+    private final double strafeVal;
+    private final double turnVal;
 
     public DriveCmd(
         DriveSubsystem driveSubsystem, double driveVal, double strafeVal, double turnVal

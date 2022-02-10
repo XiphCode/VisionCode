@@ -15,16 +15,17 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 
 public class DriveSubsystem extends SubsystemBase {
-  private WPI_TalonSRX talonFL = new WPI_TalonSRX(DriveConstants.TALON_FL_ID);
-  private WPI_TalonSRX talonFR = new WPI_TalonSRX(DriveConstants.TALON_FR_ID);
-  private WPI_TalonSRX talonBL = new WPI_TalonSRX(DriveConstants.TALON_BL_ID);
-  private WPI_TalonSRX talonBR = new WPI_TalonSRX(DriveConstants.TALON_BR_ID);
-  private MecanumDrive mechDrive = new MecanumDrive(talonFL, talonBL, talonFR, talonBR);
+  private final WPI_TalonSRX talonFL = new WPI_TalonSRX(DriveConstants.TALON_FL_ID);
+  private final WPI_TalonSRX talonFR = new WPI_TalonSRX(DriveConstants.TALON_FR_ID);
+  private final WPI_TalonSRX talonBL = new WPI_TalonSRX(DriveConstants.TALON_BL_ID);
+  private final WPI_TalonSRX talonBR = new WPI_TalonSRX(DriveConstants.TALON_BR_ID);
+  private final MecanumDrive mechDrive = new MecanumDrive(talonFL, talonBL, talonFR, talonBR);
   private final AHRS ahrs = new AHRS(SPI.Port.kMXP);
+  public final ArrayList<Pose> poses = new ArrayList<Pose>();
+
   private double turnAuto = 0;
   private double driveAuto = 0;
   public boolean loggingEnabled = false;
-  public ArrayList<Pose> poses = new ArrayList<Pose>();
 
   public class Pose {
     public double drive;

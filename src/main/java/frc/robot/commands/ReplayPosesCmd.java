@@ -5,8 +5,8 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.DriveSubsystem.Pose;
 
 public class ReplayPosesCmd extends CommandBase {
-    private DriveSubsystem driveSubsystem;
-    private boolean reverse;
+    private final DriveSubsystem driveSubsystem;
+    private final boolean reverse;
     private int i;
 
     public ReplayPosesCmd(DriveSubsystem d, boolean reverse) {

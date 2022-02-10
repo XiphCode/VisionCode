@@ -6,8 +6,8 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveSubsystem;
 
 public class BallTurnCmd extends CommandBase {
-    private DriveSubsystem driveSubsystem;
-    private PIDController drivePID, turnPID;
+    private final DriveSubsystem driveSubsystem;
+    private final PIDController drivePID, turnPID;
 
     public BallTurnCmd(DriveSubsystem driveSubsystem) {
         this.driveSubsystem = driveSubsystem;

@@ -7,8 +7,8 @@ import frc.robot.Constants.TurnConstants;
 import frc.robot.subsystems.DriveSubsystem;
 
 public class Turn180Command extends CommandBase {
-    private DriveSubsystem driveSubsystem;
-    private PIDController pid;
+    private final DriveSubsystem driveSubsystem;
+    private final PIDController pid;
 
     public Turn180Command(DriveSubsystem driveSubsystem) {
         this.driveSubsystem = driveSubsystem;
