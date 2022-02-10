@@ -6,11 +6,18 @@ import frc.robot.subsystems.DriveSubsystem.Pose;
 
 public class ReplayPosesCmd extends CommandBase {
     private DriveSubsystem driveSubsystem;
-    private int i = 0;
+    private boolean reverse;
+    private int i;
 
-    public ReplayPosesCmd(DriveSubsystem d) {
+    public ReplayPosesCmd(DriveSubsystem d, boolean reverse) {
         addRequirements(d);
         driveSubsystem = d;
+        this.reverse = reverse;
+    }
+
+    @Override
+    public void initialize() {
+        i = reverse ? driveSubsystem.poses.size() - 1 : 0;
     }
 
     @Override
@@ -20,13 +27,20 @@ public class ReplayPosesCmd extends CommandBase {
             "Execute pose " + i + "/" + driveSubsystem.poses.size() +
             ": " + p.drive + " " + p.strafe + " " + p.turn
         );
-        driveSubsystem.driveCartesian(p.drive, p.strafe, p.turn, false);
-        i++;
+        double multiplier = reverse ? -1 : 1;
+        driveSubsystem.driveCartesian(
+            p.drive * multiplier, p.strafe * multiplier, p.turn * multiplier, false
+        );
+        i += multiplier;
     }
 
     @Override
     public boolean isFinished() {
         // Don't run if logging is enabled!
-        return driveSubsystem.loggingEnabled || i >= driveSubsystem.poses.size();
+        return (
+            driveSubsystem.loggingEnabled ||
+            i < 0 ||
+            i >= driveSubsystem.poses.size()
+        );
     }
 }

@@ -71,7 +71,7 @@ public class RobotContainer {
       new DriveCmd(driveSubsystem, 0.5, 0, 0).withTimeout(1),
       new DriveCmd(driveSubsystem, 0, 0, 0.5).withTimeout(0.5),
       new DriveCmd(driveSubsystem, 0, 0, 0).withTimeout(0.5),
-      new ReplayPosesCmd(driveSubsystem)
+      new ReplayPosesCmd(driveSubsystem, true)
     );
   }
 }
