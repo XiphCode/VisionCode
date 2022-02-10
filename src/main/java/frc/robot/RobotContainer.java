@@ -36,6 +36,7 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
 
+    // Configure driving command
     driveSubsystem.setDefaultCommand(
       new ArcadeDriveCmd(
         driveSubsystem, 
