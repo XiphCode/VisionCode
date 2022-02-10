@@ -5,7 +5,6 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.SPI;
 import frc.robot.Constants.DriveConstants;
@@ -79,11 +78,6 @@ public class DriveSubsystem extends SubsystemBase {
     double driveVal = driveIsManual ? driveInput : driveAuto;
     double rotateVal = Math.abs(turnInput) >= 0.1 ? turnInput : turnAuto;
   
-    // SmartDashboard.putNumber("Drive", driveVal);
-    // SmartDashboard.putNumber("Strafe", strafeVal);
-    // SmartDashboard.putNumber("Turn", rotateVal);
-    // SmartDashboard.putNumber("Turn Auto", turnAuto);
-
     if (loggingEnabled) {
       this.poses.add(new Pose(driveVal, strafeVal, rotateVal));
     }
