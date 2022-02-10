@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class ArcadeDriveCmd extends CommandBase {
   private final DriveSubsystem driveSubsystem;
   private final Supplier<Double> driveFunction, strafeFunction, turnFunction;
+  private final Supplier<Boolean> gryoEnabledFunction;
 
   /**
    * Creates a new ArcadeDriveCmd.
@@ -23,12 +24,14 @@ public class ArcadeDriveCmd extends CommandBase {
    */
   public ArcadeDriveCmd(
     DriveSubsystem driveSubsystem, Supplier<Double> driveFunction, 
-    Supplier<Double> strafeFunction, Supplier<Double> turnFunction
+    Supplier<Double> strafeFunction, Supplier<Double> turnFunction, 
+    Supplier<Boolean> gyroEnabledFunction
   ) {
     this.driveSubsystem = driveSubsystem;
     this.driveFunction = driveFunction;
     this.strafeFunction = strafeFunction;
     this.turnFunction = turnFunction;
+    this.gryoEnabledFunction = gyroEnabledFunction;
     addRequirements(driveSubsystem);
   }
 
@@ -41,9 +44,9 @@ public class ArcadeDriveCmd extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // TODO: Disable gyro when trigger held
     driveSubsystem.driveCartesian(
-      driveFunction.get(), strafeFunction.get(), turnFunction.get(), true
+      driveFunction.get(), strafeFunction.get(), turnFunction.get(), 
+      gryoEnabledFunction.get()
     );
   }
 

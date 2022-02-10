@@ -41,7 +41,8 @@ public class RobotContainer {
         driveSubsystem, 
         () -> -stick.getLeftY(), 
         () -> stick.getLeftX(), 
-        () -> stick.getRightX()
+        () -> stick.getRightX(),
+        () -> stick.getRightTriggerAxis() > 0.1
       )
     );
   }
