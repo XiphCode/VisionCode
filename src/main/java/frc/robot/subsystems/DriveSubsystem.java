@@ -10,6 +10,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.SPI;
 import frc.robot.Constants.DriveConstants;
 
+import java.util.ArrayList;
+
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 
@@ -22,6 +24,20 @@ public class DriveSubsystem extends SubsystemBase {
   private final AHRS ahrs = new AHRS(SPI.Port.kMXP);
   private double turnAuto = 0;
   private double driveAuto = 0;
+  public boolean loggingEnabled = false;
+  public ArrayList<Pose> poses = new ArrayList<Pose>();
+
+  public class Pose {
+    public double drive;
+    public double turn;
+    public double strafe;
+
+    public Pose(double d, double s, double t) {
+      drive = d;
+      strafe = s;
+      turn = t;
+    }
+  }
 
   public DriveSubsystem() {
     mechDrive.setMaxOutput(DriveConstants.DRIVE_SPEED);
@@ -54,21 +70,25 @@ public class DriveSubsystem extends SubsystemBase {
     this.driveAuto = driveAuto;
   }
 
-  public void driveCartesian(double driveInput, double strafeVal, double turnInput) {
+  public void driveCartesian(
+    double driveInput, double strafeVal, double turnInput, boolean enableGyro
+  ) {
     // Prefer the driver input if there is any.
     boolean driveIsManual = Math.abs(driveInput) >= 0.1;
-    // Ignore gyro when auto driving
-    boolean useGyro = driveIsManual;
 
     double driveVal = driveIsManual ? driveInput : driveAuto;
     double rotateVal = Math.abs(turnInput) >= 0.1 ? turnInput : turnAuto;
   
-    SmartDashboard.putNumber("Drive", driveVal);
-    SmartDashboard.putNumber("Strafe", strafeVal);
-    SmartDashboard.putNumber("Turn", rotateVal);
-    SmartDashboard.putNumber("Turn Auto", turnAuto);
+    // SmartDashboard.putNumber("Drive", driveVal);
+    // SmartDashboard.putNumber("Strafe", strafeVal);
+    // SmartDashboard.putNumber("Turn", rotateVal);
+    // SmartDashboard.putNumber("Turn Auto", turnAuto);
 
-    if (useGyro) {
+    if (loggingEnabled) {
+      this.poses.add(new Pose(driveVal, strafeVal, rotateVal));
+    }
+
+    if (enableGyro) {
       mechDrive.driveCartesian(driveVal, strafeVal, rotateVal, ahrs.getAngle());
     } else {
       mechDrive.driveCartesian(driveVal, strafeVal, rotateVal);

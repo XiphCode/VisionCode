@@ -6,21 +6,28 @@ import frc.robot.subsystems.DriveSubsystem;
 public class DriveCmd extends CommandBase {
     private DriveSubsystem driveSubsystem;
     private double driveVal;
+    private double strafeVal;
+    private double turnVal;
 
-    public DriveCmd(DriveSubsystem driveSubsystem, double driveVal) {
+    public DriveCmd(
+        DriveSubsystem driveSubsystem, double driveVal, double strafeVal, double turnVal
+    ) {
         this.driveSubsystem = driveSubsystem;
         this.driveVal = driveVal;
+        this.strafeVal = strafeVal;
+        this.turnVal = turnVal;
         addRequirements(driveSubsystem);
     }
 
     @Override
     public void initialize() {
         System.out.println("DriveCmd start");
+        driveSubsystem.loggingEnabled = true;
     }
 
     @Override
     public void execute() {
-        driveSubsystem.driveCartesian(driveVal, 0, 0);
+        driveSubsystem.driveCartesian(driveVal, strafeVal, turnVal, false);
     }
 
     @Override
@@ -31,5 +38,6 @@ public class DriveCmd extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         System.out.println("DriveCmd end");
+        driveSubsystem.loggingEnabled = false;
     }
 }

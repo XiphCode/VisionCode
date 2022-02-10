@@ -41,8 +41,9 @@ public class ArcadeDriveCmd extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    // TODO: Disable gyro when trigger held
     driveSubsystem.driveCartesian(
-      driveFunction.get(), strafeFunction.get(), turnFunction.get()
+      driveFunction.get(), strafeFunction.get(), turnFunction.get(), true
     );
   }
 

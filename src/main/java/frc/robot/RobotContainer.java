@@ -10,10 +10,12 @@ import frc.robot.Constants.ControllerConstants;
 import frc.robot.commands.ArcadeDriveCmd;
 import frc.robot.commands.BallTurnCmd;
 import frc.robot.commands.DriveCmd;
+import frc.robot.commands.ReplayPosesCmd;
 import frc.robot.commands.Turn180Command;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
@@ -65,6 +67,11 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return new DriveCmd(driveSubsystem, 1).withTimeout(2);
+    return new SequentialCommandGroup(
+      new DriveCmd(driveSubsystem, 0.5, 0, 0).withTimeout(1),
+      new DriveCmd(driveSubsystem, 0, 0, 0.5).withTimeout(0.5),
+      new DriveCmd(driveSubsystem, 0, 0, 0).withTimeout(0.5),
+      new ReplayPosesCmd(driveSubsystem)
+    );
   }
 }
