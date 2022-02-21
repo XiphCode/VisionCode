@@ -9,9 +9,11 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.commands.ArcadeDriveCmd;
 import frc.robot.commands.BallTurnCmd;
+import frc.robot.commands.ClimberControlCmd;
 import frc.robot.commands.DriveCmd;
 import frc.robot.commands.ReplayPosesCmd;
 import frc.robot.commands.Turn180Command;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -27,6 +29,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DriveSubsystem driveSubsystem = new DriveSubsystem();
+  private final Climber climber = new Climber();
   private final XboxController stick = new XboxController(
     ControllerConstants.CONTROLLER_PORT
   );
@@ -57,10 +60,14 @@ public class RobotContainer {
   private void configureButtonBindings() {
     new JoystickButton(stick, XboxController.Button.kRightBumper.value)
       .whenPressed(new InstantCommand(driveSubsystem::resetGyroAngle));
-    new JoystickButton(stick, XboxController.Button.kA.value)
+    /*new JoystickButton(stick, XboxController.Button.kA.value)
       .whenPressed(new Turn180Command(driveSubsystem).withTimeout(5));
     new JoystickButton(stick, XboxController.Button.kB.value)
-      .whileActiveOnce(new BallTurnCmd(driveSubsystem), true);
+      .whileActiveOnce(new BallTurnCmd(driveSubsystem), true);*/
+    new JoystickButton(stick, XboxController.Button.kY.value)
+      .whenPressed(new ClimberControlCmd(climber, 1));
+    new JoystickButton(stick, XboxController.Button.kA.value)
+      .whenPressed(new ClimberControlCmd(climber, -1));
   }
 
   /**
