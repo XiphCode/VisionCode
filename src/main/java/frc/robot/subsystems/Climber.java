@@ -14,7 +14,7 @@ public class Climber extends SubsystemBase {
     public Climber() {}
 
     private void set(CANSparkMax spark, double val) {
-        left.set(val * 0.25);
+        spark.set(val * 0.25);
     }
 
     public void setLeft(double val) {
