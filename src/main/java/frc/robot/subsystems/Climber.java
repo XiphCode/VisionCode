@@ -8,15 +8,32 @@ import com.revrobotics.SparkMaxRelativeEncoder.Type;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Climber extends SubsystemBase {
-    private CANSparkMax spark = new CANSparkMax(2, MotorType.kBrushed);
+    private CANSparkMax left = new CANSparkMax(1, MotorType.kBrushed);
+    private CANSparkMax right = new CANSparkMax(2, MotorType.kBrushed);
 
     public Climber() {}
 
-    public void set(double val) {
-        spark.set(val * 0.25);
+    private void set(CANSparkMax spark, double val) {
+        left.set(val * 0.25);
     }
 
-    public RelativeEncoder getEncoder() {
+    public void setLeft(double val) {
+        set(left, val);
+    }
+
+    public void setRight(double val) {
+        set(right, val);
+    }
+
+    private RelativeEncoder getEncoder(CANSparkMax spark) {
         return spark.getEncoder(Type.kQuadrature, 1024);
+    }
+
+    public RelativeEncoder getLeftEncoder() {
+        return getEncoder(left);
+    }
+
+    public RelativeEncoder getRighEncoder() {
+        return getEncoder(right);
     }
 }

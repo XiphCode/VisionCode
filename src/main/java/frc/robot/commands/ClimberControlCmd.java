@@ -8,34 +8,48 @@ import frc.robot.subsystems.Climber;
 
 public class ClimberControlCmd extends CommandBase {
     private Climber climber;
-    private RelativeEncoder encoder;
+    private RelativeEncoder leftEncoder;
+    private RelativeEncoder rightEncoder;
     private int direction;
 
     public ClimberControlCmd(Climber climber, int direction) {
         this.climber = climber;
-        this.encoder = climber.getEncoder();
+        this.leftEncoder = climber.getLeftEncoder();
+        this.rightEncoder = climber.getRighEncoder();
         this.direction = direction;
         addRequirements(climber);
     }
 
     @Override
     public void initialize() {
-        encoder.setPosition(0);
+        leftEncoder.setPosition(0);
+        rightEncoder.setPosition(0);
     }
 
     @Override
     public void execute() {
-        SmartDashboard.putNumber("Climber", encoder.getPosition());
-        climber.set(direction);
+        SmartDashboard.putNumber("ClimberL", leftEncoder.getPosition());
+        SmartDashboard.putNumber("ClimberR", rightEncoder.getPosition());
+        if (!doneRotating(leftEncoder)) {
+            climber.setLeft(direction);
+        }
+        if (!doneRotating(rightEncoder)) {
+            climber.setRight(direction);
+        }
     }
 
-    @Override
-    public boolean isFinished() {
+    private boolean doneRotating(RelativeEncoder encoder) {
         return Math.abs(encoder.getPosition()) > 400;
     }
 
     @Override
+    public boolean isFinished() {
+        return doneRotating(leftEncoder) && doneRotating(rightEncoder);
+    }
+
+    @Override
     public void end(boolean isFinished) {
-        climber.set(0);
+        climber.setLeft(0);
+        climber.setRight(0);
     }
 }
