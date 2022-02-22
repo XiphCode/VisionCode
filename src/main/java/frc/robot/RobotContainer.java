@@ -65,9 +65,9 @@ public class RobotContainer {
     new JoystickButton(stick, XboxController.Button.kB.value)
       .whileActiveOnce(new BallTurnCmd(driveSubsystem), true);*/
     new JoystickButton(stick, XboxController.Button.kY.value)
-      .whenPressed(new ClimberControlCmd(climber, 1));
+      .whileActiveOnce(new ClimberControlCmd(climber, 1));
     new JoystickButton(stick, XboxController.Button.kA.value)
-      .whenPressed(new ClimberControlCmd(climber, -1));
+      .whileActiveOnce(new ClimberControlCmd(climber, -1));
   }
 
   /**
