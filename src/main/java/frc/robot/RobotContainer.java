@@ -4,8 +4,12 @@
 
 package frc.robot;
 
+import com.revrobotics.RelativeEncoder;
+
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.commands.ArcadeDriveCmd;
 import frc.robot.commands.BallTurnCmd;
@@ -30,6 +34,8 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DriveSubsystem driveSubsystem = new DriveSubsystem();
   private final Climber climber = new Climber();
+  private final RelativeEncoder leftEncoder = climber.getLeftEncoder();
+  private final RelativeEncoder rightEncoder = climber.getRightEncoder();
   private final XboxController stick = new XboxController(
     ControllerConstants.CONTROLLER_PORT
   );
@@ -49,6 +55,9 @@ public class RobotContainer {
         () -> stick.getRightTriggerAxis() > 0.1
       )
     );
+
+    leftEncoder.setPosition(0);
+    rightEncoder.setPosition(0);
   }
 
   /**

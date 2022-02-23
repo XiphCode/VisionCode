@@ -33,7 +33,7 @@ public class Climber extends SubsystemBase {
         return getEncoder(left);
     }
 
-    public RelativeEncoder getRighEncoder() {
+    public RelativeEncoder getRightEncoder() {
         return getEncoder(right);
     }
 }
