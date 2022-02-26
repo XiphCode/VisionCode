@@ -7,14 +7,14 @@ import com.revrobotics.SparkMaxRelativeEncoder.Type;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Climber extends SubsystemBase {
+public class ClimberSubsystem extends SubsystemBase {
     private CANSparkMax left = new CANSparkMax(1, MotorType.kBrushed);
     private CANSparkMax right = new CANSparkMax(2, MotorType.kBrushed);
 
-    public Climber() {}
+    public ClimberSubsystem() {}
 
     private void set(CANSparkMax spark, double val) {
-        spark.set(val * 0.25);
+        spark.set(val * 0.50);
     }
 
     public void setLeft(double val) {

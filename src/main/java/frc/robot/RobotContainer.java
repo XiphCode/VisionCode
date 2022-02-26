@@ -15,11 +15,15 @@ import frc.robot.commands.ArcadeDriveCmd;
 import frc.robot.commands.BallTurnCmd;
 import frc.robot.commands.ClimberControlCmd;
 import frc.robot.commands.DriveCmd;
+import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.LoggerCmd;
 import frc.robot.commands.ReplayPosesCmd;
 import frc.robot.commands.Turn180Command;
-import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -33,9 +37,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DriveSubsystem driveSubsystem = new DriveSubsystem();
-  private final Climber climber = new Climber();
-  private final RelativeEncoder leftEncoder = climber.getLeftEncoder();
-  private final RelativeEncoder rightEncoder = climber.getRightEncoder();
+  private final ClimberSubsystem climber = new ClimberSubsystem();
+  private final IntakeSubsystem intake = new IntakeSubsystem();
   private final XboxController stick = new XboxController(
     ControllerConstants.CONTROLLER_PORT
   );
@@ -52,12 +55,12 @@ public class RobotContainer {
         () -> -stick.getLeftY(), 
         () -> stick.getLeftX(), 
         () -> stick.getRightX(),
-        () -> stick.getRightTriggerAxis() > 0.1
+        () -> stick.getRightBumper()
       )
     );
 
-    leftEncoder.setPosition(0);
-    rightEncoder.setPosition(0);
+    // Schedule logging command to run in the background
+    CommandScheduler.getInstance().schedule(new LoggerCmd(climber));
   }
 
   /**
@@ -77,6 +80,11 @@ public class RobotContainer {
       .whileActiveOnce(new ClimberControlCmd(climber, 1));
     new JoystickButton(stick, XboxController.Button.kA.value)
       .whileActiveOnce(new ClimberControlCmd(climber, -1));
+
+    /*new JoystickButton(stick, XboxController.Button.kLeftStick.value)
+      .whileActiveOnce(new IntakeCommand(intake, intake::setOuter));
+    new JoystickButton(stick, XboxController.Button.kRightStick.value)
+      .whileActiveOnce(new IntakeCommand(intake, intake::setInner));*/
   }
 
   /**
