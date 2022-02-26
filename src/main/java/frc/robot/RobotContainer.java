@@ -4,12 +4,8 @@
 
 package frc.robot;
 
-import com.revrobotics.RelativeEncoder;
-
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.commands.ArcadeDriveCmd;
 import frc.robot.commands.BallTurnCmd;
