@@ -79,6 +79,9 @@ public class RobotContainer {
     new JoystickButton(stick, XboxController.Button.kA.value)
       .whileActiveOnce(new ClimberControlCmd(climber, -1));
 
+    new JoystickButton(stick, XboxController.Button.kX.value)
+      .whenPressed(new InstantCommand(() -> climber.getLeftEncoder().setPosition(0)));
+
     /*new JoystickButton(stick, XboxController.Button.kLeftStick.value)
       .whileActiveOnce(new IntakeCommand(intake, intake::setOuter));
     new JoystickButton(stick, XboxController.Button.kRightStick.value)

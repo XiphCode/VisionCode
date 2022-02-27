@@ -9,7 +9,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ClimberSubsystem extends SubsystemBase {
     private CANSparkMax left = new CANSparkMax(1, MotorType.kBrushed);
-    private CANSparkMax right = new CANSparkMax(2, MotorType.kBrushed);
+    //private CANSparkMax right = new CANSparkMax(2, MotorType.kBrushed);
+    private RelativeEncoder leftEncoder = getEncoder(left);
+    //private RelativeEncoder rightEncoder = getEncoder(right);
 
     public ClimberSubsystem() {}
 
@@ -18,11 +20,15 @@ public class ClimberSubsystem extends SubsystemBase {
     }
 
     public void setLeft(double val) {
-        set(left, val);
+        if (val > 0 && leftEncoder.getPosition() <= -900) {
+            set(left, 0);
+        } else {
+            set(left, val);
+        }
     }
 
     public void setRight(double val) {
-        set(right, val);
+        //set(right, val);
     }
 
     private RelativeEncoder getEncoder(CANSparkMax spark) {
@@ -30,10 +36,11 @@ public class ClimberSubsystem extends SubsystemBase {
     }
 
     public RelativeEncoder getLeftEncoder() {
-        return getEncoder(left);
+        return leftEncoder;
     }
 
     public RelativeEncoder getRightEncoder() {
-        return getEncoder(right);
+        return leftEncoder;
+        //return rightEncoder;
     }
 }
