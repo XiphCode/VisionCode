@@ -10,6 +10,7 @@ import frc.robot.Constants.ControllerConstants;
 import frc.robot.commands.ArcadeDriveCmd;
 import frc.robot.commands.BallTurnCmd;
 import frc.robot.commands.ClimberControlCmd;
+import frc.robot.commands.ClimberPIDCmd;
 import frc.robot.commands.DriveCmd;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.LoggerCmd;
@@ -57,6 +58,10 @@ public class RobotContainer {
       )
     );
 
+    climber.setDefaultCommand(
+      new ClimberControlCmd(climber, () -> stick.getRightY())
+    );
+
     // Schedule logging command to run in the background
     CommandScheduler.getInstance().schedule(new LoggerCmd(climber, arm));
   }
@@ -75,9 +80,9 @@ public class RobotContainer {
     new JoystickButton(stick, XboxController.Button.kB.value)
       .whileActiveOnce(new BallTurnCmd(driveSubsystem), true);*/
     new JoystickButton(stick, XboxController.Button.kY.value)
-      .whileActiveOnce(new ClimberControlCmd(climber, 1));
+      .whenPressed(new ClimberPIDCmd(climber, 1).withTimeout(5));
     new JoystickButton(stick, XboxController.Button.kA.value)
-      .whileActiveOnce(new ClimberControlCmd(climber, -1));
+      .whenPressed(new ClimberPIDCmd(climber, -1).withTimeout(5));
 
     new JoystickButton(stick, XboxController.Button.kX.value)
       .whenPressed(new InstantCommand(() -> climber.getLeftEncoder().setPosition(0)));

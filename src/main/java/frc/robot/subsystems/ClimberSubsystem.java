@@ -20,11 +20,7 @@ public class ClimberSubsystem extends SubsystemBase {
     }
 
     public void setLeft(double val) {
-        if (val > 0 && leftEncoder.getPosition() <= -900) {
-            set(left, 0);
-        } else {
-            set(left, val);
-        }
+        set(left, val);
     }
 
     public void setRight(double val) {
