@@ -15,6 +15,7 @@ import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.LoggerCmd;
 import frc.robot.commands.ReplayPosesCmd;
 import frc.robot.commands.Turn180Command;
+import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -35,6 +36,7 @@ public class RobotContainer {
   private final DriveSubsystem driveSubsystem = new DriveSubsystem();
   private final ClimberSubsystem climber = new ClimberSubsystem();
   private final IntakeSubsystem intake = new IntakeSubsystem();
+  private final ArmSubsystem arm = new ArmSubsystem();
   private final XboxController stick = new XboxController(
     ControllerConstants.CONTROLLER_PORT
   );
@@ -56,7 +58,7 @@ public class RobotContainer {
     );
 
     // Schedule logging command to run in the background
-    CommandScheduler.getInstance().schedule(new LoggerCmd(climber));
+    CommandScheduler.getInstance().schedule(new LoggerCmd(climber, arm));
   }
 
   /**
