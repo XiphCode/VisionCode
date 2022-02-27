@@ -11,13 +11,6 @@ public class ClimberControlCmd extends CommandBase {
         this.climber = climber;
         this.direction = direction;
         addRequirements(climber);
-        climber.getLeftEncoder();
-        climber.getRightEncoder();
-    }
-
-    @Override
-    public void initialize() {
-        System.out.println("CLIMBER CONTROL INIT " + direction);
     }
 
     @Override
