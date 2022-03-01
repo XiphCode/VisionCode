@@ -16,12 +16,18 @@ public class ClimberControlCmd extends CommandBase {
     }
 
     @Override
+    public void initialize() {
+        System.out.println("ClimberControlCmd start");
+    }
+
+    @Override
     public void execute() {
         climber.setLeft(controlSupplier.get());
     }
 
     @Override
     public void end(boolean interrupted) {
+        System.out.println("ClimberControlCmd end");
         climber.setLeft(0);
     }
 }
