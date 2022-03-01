@@ -14,7 +14,7 @@ public class ClimberPIDCmd extends CommandBase {
         addRequirements(climber);
         this.direction = direction;
 
-        this.controller = new PIDController(0.05, 0, 0);
+        this.controller = new PIDController(0.001, 0, 0);
         double halfSetpoint = -900.0 / 2.0;
         controller.setSetpoint(direction * halfSetpoint + halfSetpoint);
         controller.setTolerance(10);
