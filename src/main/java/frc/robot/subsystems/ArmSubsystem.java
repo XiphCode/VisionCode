@@ -16,4 +16,9 @@ public class ArmSubsystem extends SubsystemBase {
     public RelativeEncoder getEncoder() {
         return encoder;
     }
+
+    public void set(double val) {
+        System.out.println("Arm set " + val);
+        spark.set(val * 0.5);
+    }
 }

@@ -6,20 +6,24 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 
 public class IntakeCommand extends CommandBase {
-    private final Consumer<Double> intake;
+    public interface IntakeSubsytem extends Subsystem {
+        public void intakeSet(double val);
+    }
 
-    public IntakeCommand(Subsystem subsystem, Consumer<Double> intake) {
-        addRequirements(subsystem);
+    private final IntakeSubsytem intake;
+
+    public IntakeCommand(IntakeSubsytem intake) {
+        addRequirements(intake);
         this.intake = intake;
     } 
 
     @Override
     public void initialize() {
-        intake.accept(1.0);
+        intake.intakeSet(1.0);
     }
 
     @Override
     public void end(boolean interrupted) {
-        intake.accept(0.0);
+        intake.intakeSet(0.0);
     }
 }
