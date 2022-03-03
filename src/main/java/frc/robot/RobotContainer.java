@@ -54,7 +54,7 @@ public class RobotContainer {
         () -> -stick.getLeftY(), 
         () -> stick.getLeftX(), 
         () -> stick.getRightX(),
-        () -> stick.getRightBumper()
+        () -> false //stick.getRightBumper()
       )
     );
 
