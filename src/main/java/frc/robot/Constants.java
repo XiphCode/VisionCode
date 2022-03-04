@@ -30,6 +30,10 @@ public final class Constants {
     public class ControllerConstants {
         public static final int CONTROLLER_PORT = 0;
     }
+    public class ArmConstants {
+        public static final int ARM_SPARK = 3;
+        public static final int ARM_COUNTS_PER_REV = 8192;
+    }
     public class IntakeConstants {
         public static final int INNER_TALON_ID = 28;
         public static final int OUTER_TALON_ID = 22;

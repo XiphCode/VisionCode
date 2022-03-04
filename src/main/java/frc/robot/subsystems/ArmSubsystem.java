@@ -6,10 +6,11 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxRelativeEncoder.Type;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.ArmConstants;
 
 public class ArmSubsystem extends SubsystemBase {
-    private CANSparkMax spark = new CANSparkMax(3, MotorType.kBrushed);
-    private RelativeEncoder encoder = spark.getEncoder(Type.kQuadrature, 8192);
+    private CANSparkMax spark = new CANSparkMax(ArmConstants.ARM_SPARK, MotorType.kBrushed);
+    private RelativeEncoder encoder = spark.getEncoder(Type.kQuadrature, ArmConstants.ARM_COUNTS_PER_REV);
 
     public ArmSubsystem() {} 
 
