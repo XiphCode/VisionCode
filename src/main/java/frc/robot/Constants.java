@@ -30,4 +30,10 @@ public final class Constants {
     public class ControllerConstants {
         public static final int CONTROLLER_PORT = 0;
     }
+    public class IntakeConstants {
+        public static final int INNER_TALON_ID = 28;
+        public static final int OUTER_TALON_ID = 22;
+        public static final double INNER_POWER = -0.8; 
+        public static final double OUTER_POWER = 1.0;
+    }
 }
