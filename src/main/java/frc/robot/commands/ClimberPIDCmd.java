@@ -6,13 +6,11 @@ import frc.robot.subsystems.ClimberSubsystem;
 
 public class ClimberPIDCmd extends CommandBase {
     private ClimberSubsystem climber;
-    private int direction;
     private PIDController controller;
 
     public ClimberPIDCmd(ClimberSubsystem climber, int direction) {
         this.climber = climber;
         addRequirements(climber);
-        this.direction = direction;
 
         this.controller = new PIDController(0.001, 0, 0);
         double halfSetpoint = -900.0 / 2.0;
