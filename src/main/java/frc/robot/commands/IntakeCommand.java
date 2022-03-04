@@ -11,15 +11,17 @@ public class IntakeCommand extends CommandBase {
     }
 
     private final IntakeSubsytem intake;
+    private final int direction;
 
-    public IntakeCommand(IntakeSubsytem intake) {
+    public IntakeCommand(IntakeSubsytem intake, int direction) {
         addRequirements(intake);
         this.intake = intake;
+        this.direction = direction;
     } 
 
     @Override
     public void initialize() {
-        intake.intakeSet(1.0);
+        intake.intakeSet(direction);
     }
 
     @Override

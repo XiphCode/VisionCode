@@ -96,9 +96,13 @@ public class RobotContainer {
       .whileActiveOnce(new ArmControlCmd(arm, 1));
 
     new JoystickButton(stick, XboxController.Button.kX.value)
-      .whileActiveOnce(new IntakeCommand(innerIntake));
+      .whileActiveOnce(new IntakeCommand(innerIntake, 1));
     new JoystickButton(stick, XboxController.Button.kA.value)
-      .whileActiveOnce(new IntakeCommand(outerIntake));
+      .whileActiveOnce(new IntakeCommand(outerIntake, 1));
+    new JoystickButton(stick, XboxController.Button.kY.value)
+      .whileActiveOnce(new IntakeCommand(innerIntake, -1));
+    new JoystickButton(stick, XboxController.Button.kB.value)
+      .whileActiveOnce(new IntakeCommand(outerIntake, -1));
   }
 
   /**
