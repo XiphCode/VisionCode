@@ -17,7 +17,6 @@ public class ClimberSubsystem extends SubsystemBase {
     public ClimberSubsystem() {}
 
     private void set(CANSparkMax spark, double val) {
-        System.out.println("Spark " + spark.getDeviceId() + " set to " + val);
         spark.set(val * ClimberConstants.POWER);
     }
 
