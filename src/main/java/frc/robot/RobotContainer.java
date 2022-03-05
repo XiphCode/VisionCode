@@ -51,7 +51,7 @@ public class RobotContainer {
     configureButtonBindings();
 
     // Configure driving command
-    driveSubsystem.setDefaultCommand(
+    /*driveSubsystem.setDefaultCommand(
       new ArcadeDriveCmd(
         driveSubsystem, 
         () -> -stick.getLeftY(), 
@@ -59,11 +59,11 @@ public class RobotContainer {
         () -> stick.getRightX(),
         () -> false //stick.getRightBumper()
       )
-    );
-
-    /*climber.setDefaultCommand(
-      new ClimberControlCmd(climber, () -> stick.getRightY())
     );*/
+
+    climber.setDefaultCommand(
+      new ClimberControlCmd(climber, () -> stick.getRightY())
+    );
 
     // Schedule logging command to run in the background
     CommandScheduler.getInstance().schedule(new LoggerCmd(climber, arm));
@@ -81,13 +81,13 @@ public class RobotContainer {
     new JoystickButton(stick, XboxController.Button.kA.value)
       .whenPressed(new Turn180Command(driveSubsystem).withTimeout(5));
     new JoystickButton(stick, XboxController.Button.kB.value)
-      .whileActiveOnce(new BallTurnCmd(driveSubsystem), true);
+      .whileActiveOnce(new BallTurnCmd(driveSubsystem), true);*/
     new JoystickButton(stick, XboxController.Button.kY.value)
       .whenPressed(new ClimberPIDCmd(climber, 1).withTimeout(5));
     new JoystickButton(stick, XboxController.Button.kA.value)
       .whenPressed(new ClimberPIDCmd(climber, -1).withTimeout(5));
 
-    new JoystickButton(stick, XboxController.Button.kX.value)
+    /*new JoystickButton(stick, XboxController.Button.kX.value)
       .whenPressed(new InstantCommand(() -> climber.getLeftEncoder().setPosition(0)));*/
     
     new JoystickButton(stick, XboxController.Button.kLeftBumper.value)
@@ -95,14 +95,14 @@ public class RobotContainer {
     new JoystickButton(stick, XboxController.Button.kRightBumper.value)
       .whileActiveOnce(new ArmControlCmd(arm, 1));
 
-    new JoystickButton(stick, XboxController.Button.kX.value)
+    /*new JoystickButton(stick, XboxController.Button.kX.value)
       .whileActiveOnce(new IntakeCommand(innerIntake, 1));
     new JoystickButton(stick, XboxController.Button.kA.value)
       .whileActiveOnce(new IntakeCommand(outerIntake, 1));
     new JoystickButton(stick, XboxController.Button.kY.value)
       .whileActiveOnce(new IntakeCommand(innerIntake, -1));
     new JoystickButton(stick, XboxController.Button.kB.value)
-      .whileActiveOnce(new IntakeCommand(outerIntake, -1));
+      .whileActiveOnce(new IntakeCommand(outerIntake, -1));*/
   }
 
   /**

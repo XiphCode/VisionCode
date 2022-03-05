@@ -10,9 +10,9 @@ import frc.robot.Constants.ClimberConstants;
 
 public class ClimberSubsystem extends SubsystemBase {
     private CANSparkMax left = new CANSparkMax(ClimberConstants.LEFT_SPARK, MotorType.kBrushed);
-    //private CANSparkMax right = new CANSparkMax(ClimberConstants.RIGHT_SPARK, MotorType.kBrushed);
+    private CANSparkMax right = new CANSparkMax(ClimberConstants.RIGHT_SPARK, MotorType.kBrushed);
     private RelativeEncoder leftEncoder = getEncoder(left);
-    //private RelativeEncoder rightEncoder = getEncoder(right);
+    private RelativeEncoder rightEncoder = getEncoder(right);
 
     public ClimberSubsystem() {}
 
@@ -25,7 +25,7 @@ public class ClimberSubsystem extends SubsystemBase {
     }
 
     public void setRight(double val) {
-        //set(right, val);
+        set(right, val);
     }
 
     private RelativeEncoder getEncoder(CANSparkMax spark) {
@@ -37,7 +37,6 @@ public class ClimberSubsystem extends SubsystemBase {
     }
 
     public RelativeEncoder getRightEncoder() {
-        return leftEncoder;
-        //return rightEncoder;
+        return rightEncoder;
     }
 }
