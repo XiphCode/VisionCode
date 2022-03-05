@@ -1,20 +1,23 @@
 package frc.robot.commands;
 
+import java.util.function.Supplier;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ArmSubsystem;
 
 public class ArmControlCmd extends CommandBase {
     private final ArmSubsystem arm;
-    private final int direction;
+    private final Supplier<Double> input;
 
-    public ArmControlCmd(ArmSubsystem arm, int direction) {
+    public ArmControlCmd(ArmSubsystem arm, Supplier<Double> input) {
         this.arm = arm;
-        this.direction = direction;
+        addRequirements(arm);
+        this.input = input;
     }
 
     @Override
     public void execute() {
-        arm.set(direction);
+        arm.set(input.get());
     }
     
     @Override

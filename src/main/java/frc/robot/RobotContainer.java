@@ -69,6 +69,10 @@ public class RobotContainer {
       new ClimberControlCmd(climber, () -> coDriverController.getRightY())
     );
 
+    arm.setDefaultCommand(
+      new ArmControlCmd(arm, () -> coDriverController.getLeftY())
+    );
+
     // Schedule logging command to run in the background
     CommandScheduler.getInstance().schedule(new LoggerCmd(climber, arm));
   }
@@ -98,10 +102,6 @@ public class RobotContainer {
         System.out.println("Reset climber encoder");
         climber.getLeftEncoder().setPosition(0);
       }));
-    new JoystickButton(coDriverController, XboxController.Button.kLeftBumper.value)
-      .whileActiveOnce(new ArmControlCmd(arm, -1));
-    new JoystickButton(coDriverController, XboxController.Button.kRightBumper.value)
-      .whileActiveOnce(new ArmControlCmd(arm, 1));
     new JoystickButton(coDriverController, XboxController.Button.kLeftBumper.value)
       .whileActiveOnce(new IntakeCommand(innerIntake, 1));
     new JoystickButton(coDriverController, XboxController.Button.kRightBumper.value)
