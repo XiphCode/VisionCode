@@ -27,6 +27,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -41,8 +42,11 @@ public class RobotContainer {
   private final InnerIntakeSubsystem innerIntake = new InnerIntakeSubsystem();
   private final OuterIntakeSubsystem outerIntake = new OuterIntakeSubsystem();
   private final ArmSubsystem arm = new ArmSubsystem();
-  private final XboxController stick = new XboxController(
-    ControllerConstants.CONTROLLER_PORT
+  private final XboxController driverController = new XboxController(
+    ControllerConstants.DRIVER_PORT
+  );
+  private final XboxController coDriverController = new XboxController(
+    ControllerConstants.CODRIVER_PORT
   );
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -51,18 +55,18 @@ public class RobotContainer {
     configureButtonBindings();
 
     // Configure driving command
-    /*driveSubsystem.setDefaultCommand(
+    driveSubsystem.setDefaultCommand(
       new ArcadeDriveCmd(
         driveSubsystem, 
-        () -> -stick.getLeftY(), 
-        () -> stick.getLeftX(), 
-        () -> stick.getRightX(),
-        () -> false //stick.getRightBumper()
+        () -> -driverController.getLeftY(), 
+        () -> driverController.getLeftX(), 
+        () -> driverController.getRightX(),
+        () -> driverController.getRightBumper()
       )
-    );*/
+    );
 
     climber.setDefaultCommand(
-      new ClimberControlCmd(climber, () -> stick.getRightY())
+      new ClimberControlCmd(climber, () -> coDriverController.getRightY())
     );
 
     // Schedule logging command to run in the background
@@ -76,33 +80,36 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    /*new JoystickButton(stick, XboxController.Button.kRightBumper.value)
+    // Driver
+    new JoystickButton(driverController, XboxController.Button.kA.value)
       .whenPressed(new InstantCommand(driveSubsystem::resetGyroAngle));
-    new JoystickButton(stick, XboxController.Button.kA.value)
+    new JoystickButton(driverController, XboxController.Button.kX.value)
       .whenPressed(new Turn180Command(driveSubsystem).withTimeout(5));
-    new JoystickButton(stick, XboxController.Button.kB.value)
-      .whileActiveOnce(new BallTurnCmd(driveSubsystem), true);*/
-    new JoystickButton(stick, XboxController.Button.kY.value)
-      .whenPressed(new ClimberPIDCmd(climber, 1).withTimeout(5));
-    new JoystickButton(stick, XboxController.Button.kA.value)
-      .whenPressed(new ClimberPIDCmd(climber, -1).withTimeout(5));
-
-    /*new JoystickButton(stick, XboxController.Button.kX.value)
-      .whenPressed(new InstantCommand(() -> climber.getLeftEncoder().setPosition(0)));*/
+    new JoystickButton(driverController, XboxController.Button.kB.value)
+      .whileActiveOnce(new BallTurnCmd(driveSubsystem), true);
     
-    new JoystickButton(stick, XboxController.Button.kLeftBumper.value)
+    // Co-Driver
+    new JoystickButton(coDriverController, XboxController.Button.kY.value)
+      .whenPressed(new ClimberPIDCmd(climber, 1).withTimeout(5));
+    new JoystickButton(coDriverController, XboxController.Button.kA.value)
+      .whenPressed(new ClimberPIDCmd(climber, -1).withTimeout(5));
+    new JoystickButton(coDriverController, XboxController.Button.kBack.value)
+      .whenPressed(new InstantCommand(() -> {
+        System.out.println("Reset climber encoder");
+        climber.getLeftEncoder().setPosition(0);
+      }));
+    new JoystickButton(coDriverController, XboxController.Button.kLeftBumper.value)
       .whileActiveOnce(new ArmControlCmd(arm, -1));
-    new JoystickButton(stick, XboxController.Button.kRightBumper.value)
+    new JoystickButton(coDriverController, XboxController.Button.kRightBumper.value)
       .whileActiveOnce(new ArmControlCmd(arm, 1));
-
-    /*new JoystickButton(stick, XboxController.Button.kX.value)
+    new JoystickButton(coDriverController, XboxController.Button.kLeftBumper.value)
       .whileActiveOnce(new IntakeCommand(innerIntake, 1));
-    new JoystickButton(stick, XboxController.Button.kA.value)
+    new JoystickButton(coDriverController, XboxController.Button.kRightBumper.value)
       .whileActiveOnce(new IntakeCommand(outerIntake, 1));
-    new JoystickButton(stick, XboxController.Button.kY.value)
+    new Trigger(() -> coDriverController.getLeftTriggerAxis() > 0.25)
       .whileActiveOnce(new IntakeCommand(innerIntake, -1));
-    new JoystickButton(stick, XboxController.Button.kB.value)
-      .whileActiveOnce(new IntakeCommand(outerIntake, -1));*/
+    new Trigger(() -> coDriverController.getRightTriggerAxis() > 0.25)
+      .whileActiveOnce(new IntakeCommand(outerIntake, -1));
   }
 
   /**

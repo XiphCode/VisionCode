@@ -28,7 +28,8 @@ public final class Constants {
         public static final double VEL_TOL = 10;
     }
     public class ControllerConstants {
-        public static final int CONTROLLER_PORT = 0;
+        public static final int DRIVER_PORT = 0;
+        public static final int CODRIVER_PORT = 1;
     }
     public class ArmConstants {
         public static final int ARM_SPARK = 3;
