@@ -33,7 +33,7 @@ public final class Constants {
     }
     public class ArmConstants {
         public static final int ARM_SPARK = 3;
-        public static final int ARM_COUNTS_PER_REV = 8192;
+        public static final int ARM_COUNTS_PER_REV = 2048;
     }
     public class IntakeConstants {
         public static final int INNER_TALON_ID = 28;
