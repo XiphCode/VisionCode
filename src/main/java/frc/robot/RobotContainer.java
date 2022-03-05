@@ -42,6 +42,7 @@ public class RobotContainer {
   private final InnerIntakeSubsystem innerIntake = new InnerIntakeSubsystem();
   private final OuterIntakeSubsystem outerIntake = new OuterIntakeSubsystem();
   private final ArmSubsystem arm = new ArmSubsystem();
+  private final LoggerCmd loggerCmd = new LoggerCmd(climber, arm);
   private final XboxController driverController = new XboxController(
     ControllerConstants.DRIVER_PORT
   );
@@ -74,7 +75,7 @@ public class RobotContainer {
     );
 
     // Schedule logging command to run in the background
-    CommandScheduler.getInstance().schedule(new LoggerCmd(climber, arm));
+    CommandScheduler.getInstance().schedule(loggerCmd);
   }
 
   /**
@@ -124,5 +125,9 @@ public class RobotContainer {
       new DriveCmd(driveSubsystem, 0, 0, 0).withTimeout(0.5),
       new ReplayPosesCmd(driveSubsystem, true)
     );
+  }
+
+  public void disabledInit() {
+    loggerCmd.resetEncoders();
   }
 }

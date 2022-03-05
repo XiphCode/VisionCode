@@ -27,9 +27,7 @@ public class LoggerCmd extends CommandBase{
     @Override
     public void initialize() {
         System.out.println("LoggerCmd initialize");
-        leftEncoder.setPosition(0);
-        rightEncoder.setPosition(0);
-        armEncoder.setPosition(0);
+        resetEncoders();
     }
 
     @Override
@@ -42,5 +40,11 @@ public class LoggerCmd extends CommandBase{
     @Override
     public boolean isFinished() {
         return false;
+    }
+
+    public void resetEncoders() {
+        leftEncoder.setPosition(0);
+        rightEncoder.setPosition(0);
+        armEncoder.setPosition(0);
     }
 }
