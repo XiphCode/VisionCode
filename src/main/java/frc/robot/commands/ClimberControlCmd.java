@@ -22,7 +22,9 @@ public class ClimberControlCmd extends CommandBase {
 
     @Override
     public void execute() {
-        climber.setLeft(controlSupplier.get());
+        double val = controlSupplier.get();
+        climber.setLeft(val);
+        climber.setRight(val);
     }
 
     @Override
