@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.commands.ArcadeDriveCmd;
 import frc.robot.commands.ArmControlCmd;
+import frc.robot.commands.ArmPIDCmd;
 import frc.robot.commands.BallTurnCmd;
 import frc.robot.commands.ClimberControlCmd;
 import frc.robot.commands.ClimberPIDCmd;
@@ -94,6 +95,7 @@ public class RobotContainer {
       .whileActiveOnce(new BallTurnCmd(driveSubsystem), true);
     
     // Co-Driver
+    // Climber
     new JoystickButton(coDriverController, XboxController.Button.kY.value)
       .whenPressed(new ClimberPIDCmd(climber, 1).withTimeout(5));
     new JoystickButton(coDriverController, XboxController.Button.kA.value)
@@ -103,6 +105,12 @@ public class RobotContainer {
         System.out.println("Reset climber encoder");
         climber.getLeftEncoder().setPosition(0);
       }));
+    // arm
+    new JoystickButton(coDriverController, XboxController.Button.kY.value)
+      .whenPressed(new ArmPIDCmd(arm, ArmPIDCmd.Direction.kUp).withTimeout(5));
+    new JoystickButton(coDriverController, XboxController.Button.kX.value)
+      .whenPressed(new ArmPIDCmd(arm, ArmPIDCmd.Direction.kDown).withTimeout(5));
+    // intake
     new JoystickButton(coDriverController, XboxController.Button.kLeftBumper.value)
       .whileActiveOnce(new IntakeCommand(innerIntake, 1));
     new JoystickButton(coDriverController, XboxController.Button.kRightBumper.value)
