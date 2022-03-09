@@ -24,21 +24,24 @@ public class ClimberPIDCmd extends CommandBase {
 
     @Override
     public void initialize() {
+        leftController.reset();
+        rightController.reset();
         System.out.println("ClimberControl init " + leftController.getSetpoint());
     }
 
     @Override
     public void execute() {
-        double leftVal = 0, rightVal = 0;
-        if (!leftController.atSetpoint()) {
-            leftVal = leftController.calculate(climber.getLeftEncoder().getPosition());
+        double leftVal = leftController.calculate(climber.getLeftEncoder().getPosition());
+        if (leftController.atSetpoint()) {
+            leftVal = 0;
         }
         climber.setLeft(-leftVal);
-        if (!rightController.atSetpoint()) {
-            rightVal = rightController.calculate(climber.getRightEncoder().getPosition());
+        double rightVal = rightController.calculate(climber.getRightEncoder().getPosition());
+        if (rightController.atSetpoint()) {
+            rightVal = 0;
         }
         climber.setRight(-rightVal);
-        System.out.println("ClimberControl execute " + leftVal + ", " + rightVal);
+        System.out.println("ClimberControl execute " + leftController.getSetpoint() + " " + leftController.atSetpoint() + " " + leftVal + ", " + rightVal);
     }
 
     @Override
@@ -48,7 +51,7 @@ public class ClimberPIDCmd extends CommandBase {
 
     @Override
     public void end(boolean isInterrupted) {
-        System.out.println("ClimberControl end");
+        System.out.println("ClimberControl end " + isInterrupted);
         climber.setLeft(0);
         climber.setRight(0);
     }

@@ -103,10 +103,10 @@ public class RobotContainer {
     new JoystickButton(coDriverController, XboxController.Button.kBack.value)
       .whenPressed(new InstantCommand(() -> {
         System.out.println("Reset climber encoder");
-        climber.getLeftEncoder().setPosition(0);
+        loggerCmd.resetEncoders();
       }));
     // arm
-    new JoystickButton(coDriverController, XboxController.Button.kY.value)
+    new JoystickButton(coDriverController, XboxController.Button.kB.value)
       .whenPressed(new ArmPIDCmd(arm, ArmPIDCmd.Direction.kUp).withTimeout(5));
     new JoystickButton(coDriverController, XboxController.Button.kX.value)
       .whenPressed(new ArmPIDCmd(arm, ArmPIDCmd.Direction.kDown).withTimeout(5));
