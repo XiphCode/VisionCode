@@ -15,7 +15,7 @@ package frc.robot;
 public final class Constants {
     public class DriveConstants {
         public static final int TALON_FL_ID = 5;
-        public static final int TALON_FR_ID = 2;
+        public static final int TALON_FR_ID = 6;
         public static final int TALON_BL_ID = 20;
         public static final int TALON_BR_ID = 30;
         public static final double DRIVE_SPEED = 0.8;
@@ -37,8 +37,8 @@ public final class Constants {
     }
     public class IntakeConstants {
         public static final int INNER_TALON_ID = 28;
-        public static final int OUTER_TALON_ID = 22;
-        public static final double INNER_POWER = -0.8; 
+        public static final int OUTER_TALON_ID = 2;
+        public static final double INNER_POWER = -1.0; 
         public static final double OUTER_POWER = 1.0;
     }
     public class ClimberConstants {
