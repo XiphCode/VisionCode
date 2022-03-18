@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -9,8 +10,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ArmConstants;
 
 public class ArmSubsystem extends SubsystemBase {
-    private CANSparkMax spark = new CANSparkMax(ArmConstants.ARM_SPARK, MotorType.kBrushed);
-    private RelativeEncoder encoder = spark.getEncoder(
+    private WPI_TalonSRX leftTalon = new WPI_TalonSRX(ArmConstants.ARM_LEFT_TALON);
+    private CANSparkMax rightSpark = new CANSparkMax(ArmConstants.ARM_RIGHT_SPARK, MotorType.kBrushed);
+    private RelativeEncoder encoder = rightSpark.getEncoder(
         SparkMaxRelativeEncoder.Type.kQuadrature, ArmConstants.ARM_COUNTS_PER_REV
     );
 
@@ -21,6 +23,7 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public void set(double val) {
-        spark.set(val * 0.5);
+        leftTalon.set(val * ArmConstants.ARM_POWER);
+        rightSpark.set(val * ArmConstants.ARM_POWER);
     }
 }
