@@ -1,17 +1,19 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxRelativeEncoder.Type;
 
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ClimberConstants;
 
 public class ClimberSubsystem extends SubsystemBase {
     private CANSparkMax left = new CANSparkMax(ClimberConstants.LEFT_SPARK, MotorType.kBrushed);
-    private CANSparkMax right = new CANSparkMax(ClimberConstants.RIGHT_SPARK, MotorType.kBrushed);
+    private WPI_TalonSRX rightTalon = new WPI_TalonSRX(ClimberConstants.RIGHT_TALON);
     private RelativeEncoder leftEncoder = getEncoder(left);
     private Encoder rightEncoder = new Encoder(
         ClimberConstants.RIGHT_ENCODER_PIN_A, ClimberConstants.RIGHT_ENCODER_PIN_B
@@ -19,7 +21,7 @@ public class ClimberSubsystem extends SubsystemBase {
 
     public ClimberSubsystem() {}
 
-    private void set(CANSparkMax spark, double val) {
+    private void set(MotorController spark, double val) {
         spark.set(val * ClimberConstants.POWER);
     }
 
@@ -28,7 +30,7 @@ public class ClimberSubsystem extends SubsystemBase {
     }
 
     public void setRight(double val) {
-        set(right, val);
+        set(rightTalon, val);
     }
 
     private RelativeEncoder getEncoder(CANSparkMax spark) {

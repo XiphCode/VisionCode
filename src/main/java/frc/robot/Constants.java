@@ -45,7 +45,7 @@ public final class Constants {
     }
     public class ClimberConstants {
         public static final int LEFT_SPARK = 1;
-        public static final int RIGHT_SPARK = 2;
+        public static final int RIGHT_TALON = 6;
         public static final int ENCODER_COUNTS_PER_REV = 1024;
         public static final double POWER = 1.0;
         public static final int RIGHT_ENCODER_PIN_A = 0;
