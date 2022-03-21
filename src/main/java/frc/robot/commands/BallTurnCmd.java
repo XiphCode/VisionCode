@@ -12,7 +12,7 @@ public class BallTurnCmd extends CommandBase {
     public BallTurnCmd(DriveSubsystem driveSubsystem) {
         this.driveSubsystem = driveSubsystem;
         drivePID = new PIDController(0.07, 0, 0.02);
-        drivePID.setSetpoint(35);
+        drivePID.setSetpoint(37);
         turnPID = new PIDController(0.7, 0, 0.07);
         turnPID.setSetpoint(0);
     }
