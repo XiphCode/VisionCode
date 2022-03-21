@@ -36,7 +36,7 @@ public class ClimberPIDCmd extends CommandBase {
             leftVal = 0;
         }
         climber.setLeft(-leftVal);
-        double rightVal = rightController.calculate(climber.getRightEncoder().getPosition());
+        double rightVal = rightController.calculate(climber.getRightEncoder().getDistance());
         if (rightController.atSetpoint()) {
             rightVal = 0;
         }

@@ -48,6 +48,8 @@ public final class Constants {
         public static final int RIGHT_SPARK = 2;
         public static final int ENCODER_COUNTS_PER_REV = 1024;
         public static final double POWER = 1.0;
+        public static final int RIGHT_ENCODER_PIN_A = 0;
+        public static final int RIGHT_ENCODER_PIN_B = 1;
     }
 }//if you are reading this, hi
 //Kamalika is awesome

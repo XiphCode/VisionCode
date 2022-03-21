@@ -5,6 +5,7 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxRelativeEncoder.Type;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ClimberConstants;
 
@@ -12,7 +13,9 @@ public class ClimberSubsystem extends SubsystemBase {
     private CANSparkMax left = new CANSparkMax(ClimberConstants.LEFT_SPARK, MotorType.kBrushed);
     private CANSparkMax right = new CANSparkMax(ClimberConstants.RIGHT_SPARK, MotorType.kBrushed);
     private RelativeEncoder leftEncoder = getEncoder(left);
-    private RelativeEncoder rightEncoder = getEncoder(right);
+    private Encoder rightEncoder = new Encoder(
+        ClimberConstants.RIGHT_ENCODER_PIN_A, ClimberConstants.RIGHT_ENCODER_PIN_B
+    );
 
     public ClimberSubsystem() {}
 
@@ -36,7 +39,7 @@ public class ClimberSubsystem extends SubsystemBase {
         return leftEncoder;
     }
 
-    public RelativeEncoder getRightEncoder() {
+    public Encoder getRightEncoder() {
         return rightEncoder;
     }
 }
