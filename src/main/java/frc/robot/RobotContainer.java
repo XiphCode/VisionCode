@@ -17,6 +17,7 @@ import frc.robot.commands.DriveCmd;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.LoggerCmd;
 import frc.robot.commands.ReplayPosesCmd;
+import frc.robot.commands.StallCmd;
 import frc.robot.commands.Turn180Command;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ClimberSubsystem;
@@ -109,7 +110,10 @@ public class RobotContainer {
     new JoystickButton(coDriverController, XboxController.Button.kB.value)
       .whenPressed(new ArmPIDCmd(arm, ArmPIDCmd.Direction.kUp).withTimeout(5));
     new JoystickButton(coDriverController, XboxController.Button.kX.value)
-      .whenPressed(new ArmPIDCmd(arm, ArmPIDCmd.Direction.kDown).withTimeout(5));
+      .whenPressed(new SequentialCommandGroup(
+        new ArmPIDCmd(arm, ArmPIDCmd.Direction.kDown).withTimeout(5),
+        new StallCmd(arm).withTimeout(3)
+      ));
     // intake
     new JoystickButton(coDriverController, XboxController.Button.kLeftBumper.value)
       .whileActiveOnce(new IntakeCommand(innerIntake, 1));
@@ -128,10 +132,9 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     return new SequentialCommandGroup(
-      new DriveCmd(driveSubsystem, 0.5, 0, 0).withTimeout(1),
-      new DriveCmd(driveSubsystem, 0, 0, 0.5).withTimeout(0.5),
-      new DriveCmd(driveSubsystem, 0, 0, 0).withTimeout(0.5),
-      new ReplayPosesCmd(driveSubsystem, true)
+      new BallTurnCmd(driveSubsystem),
+      new InstantCommand(() -> innerIntake.intakeSet(-1)).withTimeout(1),
+      new InstantCommand(() -> driveSubsystem.setDriveAuto(1)).withTimeout(1)
     );
   }
 

@@ -22,14 +22,15 @@ public class ArmPIDCmd extends CommandBase {
     public ArmPIDCmd(ArmSubsystem arm, Direction d) {
         this.arm = arm;
         addRequirements(arm);
-        this.pidController = new PIDController(0.5, 0, 0);
+        this.pidController = new PIDController(2.10, 0, 0.1);
         pidController.setSetpoint(directionToSetpoint(d));
+        pidController.setTolerance(0.05);
     }
 
     private double directionToSetpoint(Direction d) {
         switch(d) {
             case kUp:
-                return -0.8;
+                return -0.75;
             case kDown:
                 return 0;
         }
@@ -51,6 +52,7 @@ public class ArmPIDCmd extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
+        System.out.println("[Arm] end " + interrupted);
         arm.set(0);
     }
 }
