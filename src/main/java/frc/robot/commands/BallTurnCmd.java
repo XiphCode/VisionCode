@@ -12,7 +12,7 @@ public class BallTurnCmd extends CommandBase {
     public BallTurnCmd(DriveSubsystem driveSubsystem) {
         this.driveSubsystem = driveSubsystem;
         drivePID = new PIDController(0.07, 0, 0.02);
-        drivePID.setSetpoint(37);
+        drivePID.setSetpoint(78);
         turnPID = new PIDController(0.7, 0, 0.07);
         turnPID.setSetpoint(0);
     }
@@ -26,7 +26,7 @@ public class BallTurnCmd extends CommandBase {
     public void execute() {
         double ballR = SmartDashboard.getNumber("BallR", -99);
         if (10 <= ballR && ballR <= 40) {
-            driveSubsystem.setDriveAuto(drivePID.calculate(ballR));
+            driveSubsystem.setDriveAuto(drivePID.calculate(ballR) * 0.5);
         }
         double ballX = SmartDashboard.getNumber("BallX", -99);
         if (-1 <= ballX && ballX <= 1) {
