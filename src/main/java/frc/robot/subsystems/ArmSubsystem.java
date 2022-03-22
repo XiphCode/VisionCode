@@ -23,7 +23,7 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public void set(double val) {
-        leftTalon.set(val * ArmConstants.ARM_POWER);
-        rightSpark.set(val * ArmConstants.ARM_POWER);
+        leftTalon.set(-val * ArmConstants.ARM_POWER);
+        rightSpark.set(-val * ArmConstants.ARM_POWER);
     }
 }
