@@ -18,7 +18,7 @@ public final class Constants {
         public static final int TALON_FR_ID = 16;
         public static final int TALON_BL_ID = 27;
         public static final int TALON_BR_ID = 30;
-        public static final double DRIVE_SPEED = 0.8;
+        public static final double DRIVE_SPEED = 1.0;
     }
     public class TurnConstants {
         public static final double kP = 0.02;
