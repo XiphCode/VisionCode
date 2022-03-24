@@ -132,9 +132,9 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     return new SequentialCommandGroup(
-      new BallTurnCmd(driveSubsystem),
-      new InstantCommand(() -> innerIntake.intakeSet(-1)).withTimeout(1),
-      new InstantCommand(() -> driveSubsystem.setDriveAuto(1)).withTimeout(1)
+      new IntakeCommand(innerIntake, 1).withTimeout(1),
+      new DriveCmd(driveSubsystem, -1, 0, 0).withTimeout(1.3),
+      new ClimberControlCmd(climber, () -> 1.0).withTimeout(0.5)
     );
   }
 
