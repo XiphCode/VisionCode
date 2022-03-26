@@ -9,7 +9,7 @@ import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ClimberSubsystem;
 
 public class LoggerCmd extends CommandBase{
-    private RelativeEncoder leftEncoder;
+    private Encoder leftEncoder;
     private Encoder rightEncoder;
     private RelativeEncoder armEncoder;
 
@@ -33,7 +33,7 @@ public class LoggerCmd extends CommandBase{
 
     @Override
     public void execute() {
-        SmartDashboard.putNumber("ClimberL", leftEncoder.getPosition());
+        SmartDashboard.putNumber("ClimberL", leftEncoder.getDistance());
         SmartDashboard.putNumber("ClimberR", rightEncoder.getDistance());
         SmartDashboard.putNumber("Arm", armEncoder.getPosition());
     }
@@ -44,7 +44,7 @@ public class LoggerCmd extends CommandBase{
     }
 
     public void resetEncoders() {
-        leftEncoder.setPosition(0);
+        leftEncoder.reset();
         rightEncoder.reset();
         armEncoder.setPosition(0);
     }
