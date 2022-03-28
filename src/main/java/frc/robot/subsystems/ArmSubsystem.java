@@ -22,8 +22,22 @@ public class ArmSubsystem extends SubsystemBase {
         return encoder;
     }
 
+    double getPower(double val) {
+        if (val > 1) {
+            // going down
+            return ArmConstants.LOW_MULTIPLER;
+        }
+        if (encoder.getPosition() < -0.75) {
+            // at the top and going up
+            return ArmConstants.LOW_MULTIPLER;
+        }
+        return 1.0;
+    }
+
     public void set(double val) {
-        leftTalon.set(-val * ArmConstants.ARM_POWER);
-        rightSpark.set(-val * ArmConstants.ARM_POWER);
+        double correctedVal = -val;
+        double power = getPower(val);
+        leftTalon.set(correctedVal * ArmConstants.ARM_POWER * power);
+        rightSpark.set(correctedVal * ArmConstants.ARM_POWER * power);
     }
 }
