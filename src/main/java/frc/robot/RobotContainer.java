@@ -17,6 +17,7 @@ import frc.robot.commands.DriveCmd;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.LoggerCmd;
 import frc.robot.commands.ReplayPosesCmd;
+import frc.robot.commands.SingleClimberCmd;
 import frc.robot.commands.StallCmd;
 import frc.robot.commands.Turn180Command;
 import frc.robot.subsystems.ArmSubsystem;
@@ -98,22 +99,13 @@ public class RobotContainer {
     // Co-Driver
     // Climber
     new JoystickButton(coDriverController, XboxController.Button.kY.value)
-      .whenPressed(new ClimberPIDCmd(climber, 1).withTimeout(5));
-    new JoystickButton(coDriverController, XboxController.Button.kA.value)
-      .whenPressed(new ClimberPIDCmd(climber, -1).withTimeout(5));
-    new JoystickButton(coDriverController, XboxController.Button.kBack.value)
-      .whenPressed(new InstantCommand(() -> {
-        System.out.println("Reset climber encoder");
-        loggerCmd.resetEncoders();
-      }));
-    // arm
-    new JoystickButton(coDriverController, XboxController.Button.kB.value)
-      .whenPressed(new ArmPIDCmd(arm, ArmPIDCmd.Direction.kUp).withTimeout(5));
+      .whileActiveOnce(new SingleClimberCmd(climber, SingleClimberCmd.Side.kLeft, -1.0));
     new JoystickButton(coDriverController, XboxController.Button.kX.value)
-      .whenPressed(new SequentialCommandGroup(
-        new ArmPIDCmd(arm, ArmPIDCmd.Direction.kDown).withTimeout(5),
-        new StallCmd(arm).withTimeout(3)
-      ));
+      .whileActiveOnce(new SingleClimberCmd(climber, SingleClimberCmd.Side.kLeft, 1.0));
+    new JoystickButton(coDriverController, XboxController.Button.kB.value)
+      .whileActiveOnce(new SingleClimberCmd(climber, SingleClimberCmd.Side.kRight, -1.0));
+    new JoystickButton(coDriverController, XboxController.Button.kA.value)
+      .whileActiveOnce(new SingleClimberCmd(climber, SingleClimberCmd.Side.kRight, 1.0));
     // intake
     new JoystickButton(coDriverController, XboxController.Button.kLeftBumper.value)
       .whileActiveOnce(new IntakeCommand(innerIntake, 1));
