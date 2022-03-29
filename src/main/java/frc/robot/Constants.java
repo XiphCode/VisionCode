@@ -35,7 +35,7 @@ public final class Constants {
         public static final int ARM_LEFT_TALON = 23;
         public static final int ARM_RIGHT_SPARK = 3;
         public static final double ARM_POWER = 0.50;
-        public static final double LOW_MULTIPLER = 0.2;
+        public static final double LOW_MULTIPLER = 0.4;
         public static final int ARM_COUNTS_PER_REV = 2048;
     }
     public class IntakeConstants {
