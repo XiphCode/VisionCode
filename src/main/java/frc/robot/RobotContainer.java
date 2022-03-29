@@ -132,9 +132,16 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     return new SequentialCommandGroup(
-      new IntakeCommand(innerIntake, 1).withTimeout(1),
-      new DriveCmd(driveSubsystem, -1, 0, 0).withTimeout(1.3),
-      new ClimberControlCmd(climber, () -> 1.0).withTimeout(0.5)
+      // compress for 0.3 sec
+      new IntakeCommand(innerIntake, -1).withTimeout(0.3),
+      // shoot for 0.75
+      new IntakeCommand(innerIntake, 1).withTimeout(0.75),
+      // back out of tarmac
+      new DriveCmd(driveSubsystem, -1, 0, 0).withTimeout(1.0),
+      // raise climbers ~1-2 inches to let arm fall
+      new ClimberControlCmd(climber, () -> -0.5).withTimeout(0.5),
+      // push arm down a bit to make sure it falls
+      new ArmControlCmd(arm, () -> 0.75).withTimeout(0.3)
     );
   }
 
