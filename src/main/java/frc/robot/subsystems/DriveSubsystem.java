@@ -11,6 +11,7 @@ import frc.robot.Constants.DriveConstants;
 
 import java.util.ArrayList;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 
@@ -43,6 +44,11 @@ public class DriveSubsystem extends SubsystemBase {
     mechDrive.setMaxOutput(DriveConstants.DRIVE_SPEED);
     talonFR.setInverted(true);
     talonBR.setInverted(true);
+
+    talonFR.setNeutralMode(NeutralMode.Brake);
+    talonFL.setNeutralMode(NeutralMode.Brake);
+    talonBR.setNeutralMode(NeutralMode.Brake);
+    talonBL.setNeutralMode(NeutralMode.Brake);
   }
 
   @Override
